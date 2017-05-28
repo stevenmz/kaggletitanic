@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 
 if __name__ == '__main__':
-    path = "../train.csv"
+    path = "../test.csv"
     df = pd.read_csv(path)
     
     #Debug
@@ -38,3 +38,5 @@ if __name__ == '__main__':
     
     #Debug
     print(df.head(10))
+    
+    df.to_csv("../test_prepared.csv")
