@@ -4,10 +4,9 @@ Created on May 27, 2017
 @author: stevenmz
 '''
 import pandas as pd
-import numpy as np
 
 if __name__ == '__main__':
-    path = "../test.csv"
+    path = "../train.csv"
     df = pd.read_csv(path)
     
     #Debug
@@ -35,8 +34,11 @@ if __name__ == '__main__':
     #Fill mising age values
     meanAge = df.mean()["Age"]
     df["Age"] = df["Age"].fillna(meanAge)
+    meanFare = df.mean()["Fare"]
+    df["Fare"] = df["Fare"].fillna(meanFare)
     
     #Debug
     print(df.head(10))
     
-    df.to_csv("../test_prepared.csv")
+    df.to_csv("../train_prepared.csv")
+    
