@@ -4,7 +4,7 @@ Created on May 27, 2017
 @author: stevenmz
 '''
 
-from sklearn.ensemble import RandomForestClassifier
+from sklearn import svm
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
@@ -15,7 +15,6 @@ if __name__ == '__main__':
     df_train = pd.read_csv(trainpath)
     df_val = pd.read_csv(testpath)
     
-    #print df_train.head(1)
     Y = df_train.values[:, 1]
     X = df_train.values[:, 2:]
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, random_state=11610)
@@ -23,12 +22,11 @@ if __name__ == '__main__':
     print "Test shape: ", X_test.shape
     
     # Kaggle provided values for us to predict
-    print df_val.head(1)
-    val_passengerIDs = df_val.values[:, 0]
-    val_X = df_val.values[:, 1:]
+    val_passengerIDs = df_val.values[:, 1]
+    val_X = df_val.values[:, 2:]
     # print(train_X.shape)
     
-    model = RandomForestClassifier(n_estimators=15)
+    model = svm.LinearSVR()
     model.fit(X_train, y_train)
     print "Accuracy on 33% test set: ", model.score(X_test, y_test)
     
@@ -36,11 +34,10 @@ if __name__ == '__main__':
     predictions = model.predict(val_X)
     
     dfFinal = pd.DataFrame(val_passengerIDs, columns=["PassengerId"])
-    dfFinal["PassengerId"] = dfFinal["PassengerId"].astype(int)
     dfFinal["Survived"] = predictions
     
     print dfFinal.head(10)
-    dfFinal.to_csv("../submissionRF.csv", index=False)
+    dfFinal.to_csv("../submissionSVC.csv", index=False)
     
     
     
